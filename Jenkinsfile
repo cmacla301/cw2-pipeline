@@ -37,7 +37,7 @@ pipeline {
                 sshagent(credentials: ['prod-ssh']) {
                     sh '''
                         ssh -o StrictHostKeyChecking=no ubuntu@34.229.247.123 << EOF
-                        kubectl set image deployment/cw2-deployment cw2-container=${IMAGE_NAME}:${IMAGE_TAG} --record
+                        kubectl set image deployment/cw2-deployment cw2-server=${IMAGE_NAME}:${IMAGE_TAG} --record
                         kubectl rollout status deployment/cw2-deployment
                         EOF
                     '''
