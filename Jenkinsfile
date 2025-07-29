@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/cmacla301/cw2-pipeline.git'
+                git branch: 'main', credentialsId: 'github-creds', url: 'https://github.com/cmacla301/cw2-pipeline.git'
             }
         }
 
