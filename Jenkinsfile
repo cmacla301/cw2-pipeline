@@ -20,15 +20,17 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+         stage('Push Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()
-                    }
-                }
+                echo 'Skipping Docker Hub push for now'
+                // script {
+                //     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                //         dockerImage.push()
+                //     }
+                // }
             }
         }
+
 
         stage('Deploy to Kubernetes') {
             steps {
