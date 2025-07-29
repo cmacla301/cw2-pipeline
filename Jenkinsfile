@@ -22,15 +22,16 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        docker.image(env.IMAGE_NAME).push()
-                    }
-                }
+stage('Push Docker Image') {
+    steps {
+        script {
+            docker.withRegistry('https://index.docker.io/v1/', credentials('dockerhub-creds')) {
+                docker.image('cmacla301/cw2-server:1.0').push()
             }
         }
+    }
+}
+
 
         stage('Deploy to Kubernetes') {
             steps {
