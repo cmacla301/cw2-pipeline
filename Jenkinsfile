@@ -1,9 +1,9 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    }
+environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+}
 
     stages {
         stage('Clone Repository') {
@@ -20,24 +20,11 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                sshagent(credentials: ['prod-ssh']) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@34.229.247.123 \\
-                        "kubectl set image deployment/cw2-deployment cw2-container=cmacla301/cw2-server:1.0"
-                    '''
-                }
+stage('Push Docker Image') {
+    steps {
+        script {
+            docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
+                dockerImage.push()
             }
         }
     }
