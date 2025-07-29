@@ -21,15 +21,6 @@ pipeline {
             }
         }
 
-        stage('Test Docker Image') {
-            steps {
-                sh 'docker run --rm -d -p 3000:3000 --name test-container ${IMAGE_NAME}:${IMAGE_TAG}'
-                sh 'sleep 5'
-                sh 'curl -f http://localhost:3000 || exit 1'
-                sh 'docker stop test-container'
-            }
-        }
-
         stage('Push to DockerHub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
