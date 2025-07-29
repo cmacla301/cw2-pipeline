@@ -15,7 +15,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("cmacla301/cw2-server:1.0")
+                    def dockerImage = docker.build("cmacla301/cw2-server:1.0")
+                    // Store it for pushing
+                    env.IMAGE_NAME = "cmacla301/cw2-server:1.0"
                 }
             }
         }
@@ -24,7 +26,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS) {
-                        dockerImage.push()
+                        docker.image(env.IMAGE_NAME).push()
                     }
                 }
             }
@@ -37,4 +39,3 @@ pipeline {
         }
     }
 }
-
