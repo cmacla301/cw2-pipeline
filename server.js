@@ -9,7 +9,11 @@ var handleRequest = function(request, response) {
   response.writeHead(200);
   response.write("DevOps Coursework 2! | Running on: ");
   response.write(host);
+<<<<<<< HEAD
   response.end(" | v=2\n");
+=======
+  response.end(" | v=1\n");
+>>>>>>> 06c9594 (Update server.js to v=3)
   console.log("Running On:" ,host, "| Total Requests:", ++requests,"| App Uptime:", (new Date() - startTime)/1000 , "seconds", "| Log Time:",new Date());
 }
 
